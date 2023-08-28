@@ -1,0 +1,23 @@
+from classiq import Executor, Model
+from classiq.builtin_functions import StatePreparation
+from classiq.execution import IBMBackendPreferences
+
+# defining probabilities
+probabilities = [0.4, 0.05, 0.2, 0.05, 0.3, 0, 0, 0]
+
+# defining state preparation object
+sp = StatePreparation(
+    probabilities=probabilities, error_metric={"KL": {"upper_bound": 0.3}}
+)
+
+# defining the model
+model = Model()
+
+# wiring
+model.StatePreparation(params=sp)
+
+# synthesizing
+circuit = model.synthesize()
+
+# showing circuit
+circuit.show()
